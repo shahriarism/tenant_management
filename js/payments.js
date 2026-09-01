@@ -52,35 +52,60 @@ export async function renderPaymentsTab(container, ctx) {
   const monthlyTotals = Array(12).fill(0);
   let grandTotal = 0;
 
+  const floorOrder = ["Main Floor", "Basement"];
+  const unitsByFloor = {};
   for (const unit of units) {
-    const unitTenancies = relevantTenancies
-      .filter((t) => t.unitId === unit.id)
-      .sort((a, b) => (a.startDate || "").localeCompare(b.startDate || ""));
-    for (const tenancy of unitTenancies) {
-      const activeMonths = new Set(
-        monthsInYearForRange(tenancy.startDate, tenancy.endDate, selectedYear)
-      );
-      let rowTotal = 0;
-      const row = el("tr", {}, [
-        el("td", { class: "sticky-col" }, [
-          el("div", { class: "cell-unit" }, unit.name),
-          el("div", { class: "cell-tenant" }, tenancy.tenantName),
-        ]),
-      ]);
-      for (let m = 1; m <= 12; m++) {
-        const ym = `${selectedYear}-${String(m).padStart(2, "0")}`;
-        if (!activeMonths.has(ym)) {
-          row.appendChild(el("td", { class: "cell-na" }, "—"));
-          continue;
+    const floor = unit.floor || "Other";
+    (unitsByFloor[floor] = unitsByFloor[floor] || []).push(unit);
+  }
+  const orderedFloors = [
+    ...floorOrder.filter((f) => unitsByFloor[f]),
+    ...Object.keys(unitsByFloor).filter((f) => !floorOrder.includes(f)),
+  ];
+
+  for (const floorName of orderedFloors) {
+    const floorUnits = unitsByFloor[floorName];
+    const floorHasRows = floorUnits.some((u) =>
+      relevantTenancies.some((t) => t.unitId === u.id)
+    );
+    if (!floorHasRows) continue;
+
+    tbody.appendChild(
+      el("tr", { class: "floor-divider-row" }, [
+        el("td", { colspan: "14", class: "floor-divider" }, floorName),
+      ])
+    );
+
+    for (const unit of floorUnits) {
+      const unitTenancies = relevantTenancies
+        .filter((t) => t.unitId === unit.id)
+        .sort((a, b) => (a.startDate || "").localeCompare(b.startDate || ""));
+      for (const tenancy of unitTenancies) {
+        const activeMonths = new Set(
+          monthsInYearForRange(tenancy.startDate, tenancy.endDate, selectedYear)
+        );
+        let rowTotal = 0;
+        const row = el("tr", {}, [
+          el("td", { class: "sticky-col" }, [
+            el("div", { class: "cell-unit" }, unit.name),
+            el("div", { class: "cell-tenant" }, tenancy.tenantName),
+          ]),
+        ]);
+        for (let m = 1; m <= 12; m++) {
+          const ym = `${selectedYear}-${String(m).padStart(2, "0")}`;
+          if (!activeMonths.has(ym)) {
+            row.appendChild(el("td", { class: "cell-na" }, "—"));
+            continue;
+          }
+          const payment = byKey[`${tenancy.id}_${ym}`];
+          rowTotal += payment?.amountPaid || 0;
+          monthlyTotals[m - 1] += payment?.amountPaid || 0;
+          grandTotal += payment?.amountPaid || 0;
+          row.appendChild(paymentCell(payment, tenancy, ym, container, ctx));
         }
-        const payment = byKey[`${tenancy.id}_${ym}`];
-        rowTotal += payment?.amountPaid || 0;
-        monthlyTotals[m - 1] += payment?.amountPaid || 0;
-        grandTotal += payment?.amountPaid || 0;
-        row.appendChild(paymentCell(payment, tenancy, ym, container, ctx));
+        row.appendChild(el("td", { class: "cell-rowtotal" }, fmtMoney(rowTotal)));
+        tbody.appendChild(row);
       }
-      row.appendChild(el("td", { class: "cell-rowtotal" }, fmtMoney(rowTotal)));
-      tbody.appendChild(row);
     }
   }
   table.appendChild(tbody);
