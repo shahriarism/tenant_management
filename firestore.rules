@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Single-owner rental ledger: only the signed-in owner (you) can read/write.
+// Replace OWNER_UID below with your Firebase Auth UID (find it in Firebase console →
+// Authentication → Users, after you sign in once) for tighter security, or leave the
+// "any signed-in user" version if you're the only person who will ever sign in.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner() {
+      return request.auth != null;
+      // Tighter version once you have your UID:
+      // return request.auth != null && request.auth.uid == "OWNER_UID";
+    }
+
+    match /units/{docId} {
+      allow read, write: if isOwner();
+    }
+    match /tenancies/{docId} {
+      allow read, write: if isOwner();
+    }
+    match /payments/{docId} {
+      allow read, write: if isOwner();
+    }
+    match /expenses/{docId} {
+      allow read, write: if isOwner();
+    }
+  }
+}
