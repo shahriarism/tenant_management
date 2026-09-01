@@ -71,17 +71,14 @@ html, body {
   border-radius: var(--radius);
   background: var(--brass);
   color: var(--ink);
-  font-family: var(--font-display);
-  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
 }
+.brand-mark svg { width: 68%; height: 68%; }
 .brand-mark-lg {
-  width: 52px;
-  height: 52px;
-  font-size: 20px;
+  width: 56px;
+  height: 56px;
   margin: 0 auto 16px;
 }
 
@@ -294,6 +291,21 @@ h3 { font-family: var(--font-display); font-weight: 500; font-size: 17px; margin
 .cell-tenant { font-family: var(--font-body); font-size: 14px; }
 .cell-na { color: var(--text-on-ink-dim); opacity: 0.3; }
 .cell-rowtotal { font-weight: 500; color: var(--brass-bright); }
+
+.floor-divider-row td {
+  text-align: left;
+  padding: 10px 10px 8px;
+  border-bottom: 1px solid var(--brass);
+  background: var(--ink-panel-2);
+}
+.floor-divider {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--brass-bright);
+  letter-spacing: 0.02em;
+}
+.floor-divider-row:not(:first-child) td { padding-top: 20px; }
 
 .cell-btn {
   border: 1px solid transparent;
