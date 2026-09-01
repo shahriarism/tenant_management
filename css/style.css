@@ -1,0 +1,457 @@
+:root {
+  --ink: #14201B;
+  --ink-panel: #1C2B22;
+  --ink-panel-2: #22342A;
+  --paper: #F1ECDD;
+  --paper-dim: #D9D2BB;
+  --brass: #B8934B;
+  --brass-bright: #D2AD63;
+  --rule: rgba(241, 236, 221, 0.14);
+  --paid: #5C8B6C;
+  --partial: #C0954A;
+  --unpaid: #B15B45;
+  --text-on-ink: #EDE7D3;
+  --text-on-ink-dim: #A9A38E;
+  --text-on-paper: #1E1B12;
+  --radius: 3px;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "IBM Plex Sans", -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--ink);
+  color: var(--text-on-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+}
+
+.boot-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: var(--text-on-ink-dim);
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+/* ---------- App shell ---------- */
+#app-root {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--ink-panel);
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 12px;
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
+  background: var(--brass);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.brand-mark-lg {
+  width: 52px;
+  height: 52px;
+  font-size: 20px;
+  margin: 0 auto 16px;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 0.01em;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 12px;
+  flex: 1;
+}
+
+.nav-btn {
+  text-align: left;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-on-ink-dim);
+  font-family: var(--font-body);
+  font-size: 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
+.nav-btn:hover { color: var(--text-on-ink); background: rgba(255,255,255,0.03); }
+.nav-btn-active {
+  color: var(--brass-bright);
+  border-left: 2px solid var(--brass);
+  background: rgba(184, 147, 75, 0.08);
+}
+
+.sidebar-footer {
+  padding: 16px 20px 0;
+  border-top: 1px solid var(--rule);
+  margin-top: 12px;
+}
+.user-email {
+  font-size: 12px;
+  color: var(--text-on-ink-dim);
+  margin-bottom: 8px;
+  word-break: break-all;
+}
+
+.content {
+  flex: 1;
+  padding: 32px 40px 60px;
+  overflow-x: auto;
+}
+
+/* ---------- Sign-in ---------- */
+.signin-screen {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signin-card {
+  text-align: center;
+  max-width: 340px;
+}
+.signin-card h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+.signin-card p {
+  color: var(--text-on-ink-dim);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* ---------- Typography ---------- */
+h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  margin: 0;
+}
+h3 { font-family: var(--font-display); font-weight: 500; font-size: 17px; margin: 0 0 12px; }
+.section-label {
+  margin-top: 36px;
+  color: var(--text-on-ink-dim);
+  font-size: 13px;
+  text-transform: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+}
+
+.tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.empty-state { color: var(--text-on-ink-dim); font-style: italic; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--brass);
+  background: var(--brass);
+  color: var(--ink);
+  cursor: pointer;
+}
+.btn:hover { background: var(--brass-bright); border-color: var(--brass-bright); }
+.btn-quiet {
+  background: transparent;
+  color: var(--text-on-ink);
+  border: 1px solid var(--rule);
+}
+.btn-quiet:hover { border-color: var(--brass); color: var(--brass-bright); }
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--brass-bright);
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+
+/* ---------- Units & tenants ---------- */
+.unit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.unit-card {
+  background: var(--ink-panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.unit-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+.unit-card-head h3 { margin: 0; }
+.unit-floor-tag {
+  font-size: 11px;
+  color: var(--text-on-ink-dim);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2px 9px;
+}
+.tenancy-name { font-family: var(--font-display); font-size: 18px; }
+.tenancy-meta { color: var(--text-on-ink-dim); font-size: 13px; margin: 4px 0 12px; font-family: var(--font-mono); }
+.tenancy-actions { display: flex; gap: 8px; }
+.tenancy-empty p { color: var(--text-on-ink-dim); margin: 0 0 10px; }
+.tenancy-history { margin-top: 14px; font-size: 13px; }
+.tenancy-history summary { color: var(--text-on-ink-dim); cursor: pointer; }
+.tenancy-history ul { margin: 8px 0 0; padding-left: 18px; color: var(--text-on-ink-dim); }
+.tenancy-history li { margin-bottom: 4px; font-family: var(--font-mono); font-size: 12px; }
+
+/* ---------- Ledger table (Payments) ---------- */
+.year-picker select, select {
+  background: var(--ink-panel-2);
+  color: var(--text-on-ink);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.ledger-table, .expense-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.ledger-table th, .ledger-table td,
+.expense-table th, .expense-table td {
+  border-bottom: 1px solid var(--rule);
+  padding: 9px 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+.ledger-table thead th {
+  font-family: var(--font-body);
+  color: var(--text-on-ink-dim);
+  font-weight: 500;
+  font-size: 12px;
+  text-align: center;
+}
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background: var(--ink);
+  text-align: left !important;
+  min-width: 170px;
+}
+.cell-unit { font-family: var(--font-body); font-size: 11px; color: var(--text-on-ink-dim); }
+.cell-tenant { font-family: var(--font-body); font-size: 14px; }
+.cell-na { color: var(--text-on-ink-dim); opacity: 0.3; }
+.cell-rowtotal { font-weight: 500; color: var(--brass-bright); }
+
+.cell-btn {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 5px 9px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  min-width: 64px;
+}
+.status-paid .cell-btn { background: rgba(92,139,108,0.18); color: var(--paid); border-color: rgba(92,139,108,0.4); }
+.status-partial .cell-btn { background: rgba(192,149,74,0.18); color: var(--partial); border-color: rgba(192,149,74,0.4); }
+.status-unpaid .cell-btn { background: rgba(177,91,69,0.14); color: var(--unpaid); border-color: rgba(177,91,69,0.35); }
+
+tfoot td { font-weight: 500; border-top: 2px solid var(--rule); border-bottom: none; }
+
+/* ---------- Expenses ---------- */
+.summary-strip {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.summary-stat { }
+.summary-value { font-family: var(--font-display); font-size: 26px; }
+.summary-positive .summary-value { color: var(--paid); }
+.summary-negative .summary-value { color: var(--unpaid); }
+.summary-label { font-size: 12px; color: var(--text-on-ink-dim); margin-top: 2px; }
+
+.expense-table td { text-align: left; }
+.expense-amount-input, .expense-notes-input {
+  background: var(--ink-panel-2);
+  border: 1px solid var(--rule);
+  color: var(--text-on-ink);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  font-family: var(--font-mono);
+  width: 100%;
+}
+.expense-notes-input { font-family: var(--font-body); }
+
+/* ---------- Dashboard ---------- */
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.dash-card {
+  background: var(--ink-panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.dash-unit-name { font-size: 11px; color: var(--text-on-ink-dim); margin-bottom: 6px; }
+.dash-tenant-name { font-family: var(--font-display); font-size: 17px; }
+.dash-rent { font-family: var(--font-mono); color: var(--text-on-ink-dim); font-size: 13px; margin: 2px 0 12px; }
+.dash-vacant { color: var(--text-on-ink-dim); font-style: italic; padding: 8px 0; }
+.dash-status {
+  width: 100%;
+  border-radius: var(--radius);
+  padding: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.dash-status.status-unpaid { background: var(--brass); border-color: var(--brass); color: var(--ink); }
+.dash-status.status-paid { background: rgba(92,139,108,0.18); color: var(--paid); border-color: rgba(92,139,108,0.4); cursor: default; }
+.dash-status.status-partial { background: rgba(192,149,74,0.18); color: var(--partial); border-color: rgba(192,149,74,0.4); }
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 36px;
+  height: 200px;
+  padding: 20px 0 0;
+}
+.chart-year-group { display: flex; flex-direction: column; align-items: center; height: 100%; }
+.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 100%; flex: 1; }
+.chart-bar { width: 26px; border-radius: 2px 2px 0 0; }
+.bar-revenue { background: var(--paid); }
+.bar-expense { background: var(--unpaid); }
+.chart-year-label { margin-top: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--text-on-ink-dim); }
+.chart-legend { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 12px; color: var(--text-on-ink-dim); }
+.legend-swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.legend-revenue { background: var(--paid); }
+.legend-expense { background: var(--unpaid); margin-left: 14px; }
+
+/* ---------- Modal form ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 11, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+.modal-form {
+  background: var(--paper);
+  color: var(--text-on-paper);
+  border-radius: var(--radius);
+  padding: 28px;
+  width: 100%;
+  max-width: 380px;
+}
+.modal-form h3 { color: var(--text-on-paper); }
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+.form-field span { color: #55503f; }
+.form-field input, .form-field select {
+  padding: 9px 10px;
+  border: 1px solid var(--paper-dim);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text-on-paper);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+.form-hint { font-size: 12px; color: #6b6553; margin: -6px 0 14px; line-height: 1.5; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* ---------- Toasts ---------- */
+#toast-root {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+.toast {
+  background: var(--ink-panel-2);
+  border: 1px solid var(--brass);
+  color: var(--text-on-ink);
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast-error { border-color: var(--unpaid); }
+.toast-visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 720px) {
+  #app-root { flex-direction: column; }
+  .sidebar { width: 100%; flex-direction: row; align-items: center; padding: 12px 16px; overflow-x: auto; }
+  .brand { border: none; margin: 0; padding: 0 16px 0 0; }
+  .nav-list { flex-direction: row; }
+  .sidebar-footer { display: none; }
+  .content { padding: 20px; }
+}
