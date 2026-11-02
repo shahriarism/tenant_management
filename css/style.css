@@ -377,23 +377,41 @@ tfoot td { font-weight: 500; border-top: 2px solid var(--rule); border-bottom: n
 .dash-status.status-paid { background: rgba(92,139,108,0.18); color: var(--paid); border-color: rgba(92,139,108,0.4); cursor: default; }
 .dash-status.status-partial { background: rgba(192,149,74,0.18); color: var(--partial); border-color: rgba(192,149,74,0.4); }
 
-.chart {
-  display: flex;
-  align-items: flex-end;
-  gap: 36px;
-  height: 200px;
-  padding: 20px 0 0;
+.floor-heading {
+  margin: 28px 0 12px;
+  font-size: 18px;
+  color: var(--brass-bright);
 }
-.chart-year-group { display: flex; flex-direction: column; align-items: center; height: 100%; }
-.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 100%; flex: 1; }
-.chart-bar { width: 26px; border-radius: 2px 2px 0 0; }
+.dash-renewal {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+.dash-renewal-text { font-size: 12px; color: var(--text-on-ink-dim); margin-bottom: 8px; }
+.dash-renewal-text.renewal-soon { color: var(--partial); }
+.dash-renewal-text.renewal-overdue { color: var(--unpaid); }
+.dash-renew-btn {
+  width: 100%;
+  border-radius: var(--radius);
+  padding: 7px;
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-on-ink);
+  border: 1px solid var(--rule);
+}
+.dash-renew-btn:hover { border-color: var(--brass); color: var(--brass-bright); }
+.tenancy-renewal { margin-top: -8px; }
+
+.hbar-chart { max-width: 640px; padding-top: 8px; }
+.hbar-year { font-family: var(--font-mono); font-size: 12px; color: var(--text-on-ink-dim); margin-bottom: 10px; }
+.hbar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.hbar-label { width: 80px; font-size: 13px; color: var(--text-on-ink-dim); }
+.hbar-track { flex: 1; height: 22px; background: var(--ink-panel); border-radius: 2px; }
+.hbar-fill { height: 100%; border-radius: 2px; }
 .bar-revenue { background: var(--paid); }
 .bar-expense { background: var(--unpaid); }
-.chart-year-label { margin-top: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--text-on-ink-dim); }
-.chart-legend { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 12px; color: var(--text-on-ink-dim); }
-.legend-swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
-.legend-revenue { background: var(--paid); }
-.legend-expense { background: var(--unpaid); margin-left: 14px; }
+.hbar-value { width: 110px; text-align: right; font-family: var(--font-mono); font-size: 13px; }
 
 /* ---------- Modal form ---------- */
 .modal-overlay {
