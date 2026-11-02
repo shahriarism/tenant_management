@@ -15,7 +15,6 @@ const DEFAULT_CATEGORIES = [
   "Lawn / Snow Maintenance",
   "Property Upgrade / Improvement",
   "Repairs & Maintenance",
-  "Cash for Keys",
 ];
 
 let selectedYear = new Date().getFullYear();

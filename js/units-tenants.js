@@ -47,6 +47,13 @@ export async function renderUnitsTab(container, ctx) {
             { class: "tenancy-meta" },
             `${fmtMoney(active.rentAmount)}/mo · since ${active.startDate}`
           ),
+          el(
+            "div",
+            { class: "tenancy-meta tenancy-renewal" },
+            active.leaseRenewalDate
+              ? `Lease renews ${active.leaseRenewalDate}`
+              : "No renewal date set"
+          ),
           el("div", { class: "tenancy-actions" }, [
             el(
               "button",
@@ -136,6 +143,7 @@ function openNewTenancyForm(container, ctx, unit) {
     field("text", "tenantName", "Tenant name", "e.g. Priya Shah"),
     field("number", "rentAmount", "Monthly rent (CAD)", "850", { step: "0.01" }),
     field("date", "startDate", "Move-in date", "", { value: todayISO() }),
+    field("date", "leaseRenewalDate", "Lease renewal date (optional)", ""),
   ]);
   overlay.onSubmit = async (data) => {
     await Tenancies.add({
@@ -145,6 +153,7 @@ function openNewTenancyForm(container, ctx, unit) {
       startDate: data.startDate,
       endDate: null,
       status: "active",
+      leaseRenewalDate: data.leaseRenewalDate || null,
     });
     ctx.toast("Tenant moved in.");
     ctx.refreshTab();
@@ -160,12 +169,16 @@ function openEditTenancyForm(container, ctx, tenancy) {
       step: "0.01",
     }),
     field("date", "startDate", "Move-in date", "", { value: tenancy.startDate }),
+    field("date", "leaseRenewalDate", "Lease renewal date", "", {
+      value: tenancy.leaseRenewalDate || "",
+    }),
   ]);
   overlay.onSubmit = async (data) => {
     await Tenancies.update(tenancy.id, {
       tenantName: data.tenantName,
       rentAmount: Number(data.rentAmount) || 0,
       startDate: data.startDate,
+      leaseRenewalDate: data.leaseRenewalDate || null,
     });
     ctx.toast("Tenancy updated.");
     ctx.refreshTab();
